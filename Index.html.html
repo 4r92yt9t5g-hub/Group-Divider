@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Randomizer</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0f172a;color:white;padding:20px}
+.container{max-width:700px;margin:auto;background:#1e293b;padding:20px;border-radius:16px}
+textarea,button{width:100%;padding:12px;margin-top:10px}
+.result{margin-top:20px;padding:15px;background:#334155;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🎲 Room Randomizer</h1>
+<p>Enter exactly 5 names, one per line:</p>
+<textarea id="names" rows="8" placeholder="Parth&#10;Pruthvi&#10;Jay&#10;Harsh&#10;Meet"></textarea>
+<button id="btn">Randomize Rooms</button>
+<div id="result"></div>
+</div>
+
+<script>
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+document.getElementById('btn').addEventListener('click', function(){
+  const names = document.getElementById('names').value
+    .split(/\r?\n/)
+    .map(x => x.trim())
+    .filter(x => x.length);
+
+  if(names.length !== 5){
+    alert('Please enter exactly 5 names.');
+    return;
+  }
+
+  shuffle(names);
+
+  const roomA = names.slice(0,2);
+  const roomB = names.slice(2);
+
+  document.getElementById('result').innerHTML =
+    '<div class="result"><h2>Room A (2)</h2><p>' + roomA.join(', ') +
+    '</p><h2>Room B (3)</h2><p>' + roomB.join(', ') +
+    '</p></div>';
+});
+</script>
+</body>
+</html>
